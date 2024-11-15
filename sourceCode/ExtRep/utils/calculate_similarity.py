@@ -35,21 +35,6 @@ def get_screen_sim_score(x_screen, y_screen):
     if xx_text_words[0] == 'none' and yy_text_words[0] == 'none':
         text_flag = False
 
-    print("x_text = " + str(x_text))
-    print("y_text = " + str(y_text))
-    if text_flag:
-        print("text_sim = " + str(text_sim))
-    else:
-        print("text_sim = Null")
-
-    print("screen_sim ---------------------------------------------------")
-    print("base_text = " + str(x_text))
-    print("update_text = " + str(y_text))
-    if text_flag:
-        print("text_sim = " + str(text_sim))
-    else:
-        print("text_sim = Null")
-
     final_sim = 0
 
     if text_flag:
@@ -77,11 +62,6 @@ def get_node_sim(x_node, y_node, wv2_model):
     y_word.extend(StrUtil.tokenize("text", y_node.attrib['text'].lower().strip()))
     y_word.extend(StrUtil.tokenize("content-desc", y_node.attrib['content-desc'].lower().strip()))
 
-    print("edge_sim ---------------------------------------------------")
-    print("base_word = " + str(x_word))
-    print("update_word = " + str(y_word))
-
-    # use word2vec to calculate the similarity
     word_sim = 0
 
     x_out_vocab = []
@@ -95,9 +75,6 @@ def get_node_sim(x_node, y_node, wv2_model):
     for word in y_tmp_word:
         if word not in wv2_model.wv.vocab:
             y_out_vocab.append(word)
-
-    print("base_out_vocab = " + str(x_out_vocab))
-    print("base_out_vocab = " + str(y_out_vocab))
 
     if len(x_word) != 0 and len(y_word) != 0:
         x_count = 0
@@ -120,8 +97,6 @@ def get_node_sim(x_node, y_node, wv2_model):
             y_vec /= (len(y_word) - y_count)
         if len(x_word) != x_count and len(y_word) != y_count:
             word_sim = np.dot(x_vec, y_vec) / (norm(x_vec)*norm(y_vec))
-
-    print("word_sim = " + str(word_sim))
 
     if word_flag:
         return flag, word_sim

@@ -30,12 +30,8 @@ try:
     el4.click()
     time.sleep(3)
 
-    el5 = driver.find_element_by_android_uiautomator('new UiSelector().text("6/2/24, Start date")')
+    el5 = driver.find_elements_by_id('com.faltenreich.diaguard:id/confirm_button')[0]
     el5.click()
-    time.sleep(3)
-
-    el6 = driver.find_elements_by_id('com.faltenreich.diaguard:id/confirm_button')[0]
-    el6.click()
 
 finally:
     time.sleep(3)

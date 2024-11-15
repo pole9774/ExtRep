@@ -10,13 +10,14 @@ class Edge:
 
         self.node_id = n_id
 
+
 def has_same_edge(screens, edges, begin_id, end_id, clicked_node):
-    if clicked_node.attrib['resource-id'] != '':
-        for edge in edges:
-            if edge.begin_id == begin_id and edge.end_id == end_id:
-                screen = screens[begin_id]
-                node = screen.get_node_by_id(edge.node_id)
-                if node.attrib['resource-id'] == clicked_node.attrib['resource-id']:
-                    return True
+    for edge in edges:
+        if edge.begin_id == begin_id and edge.end_id == end_id:
+            screen = screens[begin_id]
+            node = screen.get_node_by_id(edge.node_id)
+            if node.loc_x == clicked_node.loc_x and node.loc_y == clicked_node.loc_y and \
+                    node.width == clicked_node.width and node.height == clicked_node.height:
+                return True
 
     return False

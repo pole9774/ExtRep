@@ -26,7 +26,7 @@ try:
     el3.click()
     time.sleep(3)
 
-    el4 = driver.find_elements_by_id('com.forrestguice.suntimeswidget:id/appwidget_schedalarm_more')[0]
+    el4 = driver.find_elements_by_id('com.forrestguice.suntimeswidget:id/appwidget_schedalarm_mode')[0]
     el4.click()
     time.sleep(3)
 

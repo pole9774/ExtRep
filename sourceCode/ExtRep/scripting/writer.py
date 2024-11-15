@@ -63,10 +63,10 @@ def locate_element(record_node_attrib, xml_file_path):
 
     return code
 
-def write_repaired_test_script(codes, result_test_script, caps, result_file):
-    # if not os.path.exists(result_test_script):
-    #     os.makedirs(result_test_script)
-    # result_file = 'repaired_script.py'
+def write_repaired_test_script(codes, result_test_script, caps):
+    if not os.path.exists(result_test_script):
+        os.makedirs(result_test_script)
+    result_file = 'repaired_script.py'
 
     with open(os.path.join(result_test_script, result_file), 'w') as f:
         f.write("import time\n")

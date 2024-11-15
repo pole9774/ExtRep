@@ -1,0 +1,11 @@
+// The Round Table
+digraph {
+	1 [fontsize=30 shapefile="D:/001 app_evolution/003 data/001 path/001 ours/final/result/sce-20-SoundRecorder-14/test_script_repair/1/traverse/2/simple_result/image/1.png"]
+	2 [fontsize=30 shapefile="D:/001 app_evolution/003 data/001 path/001 ours/final/result/sce-20-SoundRecorder-14/test_script_repair/1/traverse/2/simple_result/image/2.png"]
+	3 [fontsize=30 shapefile="D:/001 app_evolution/003 data/001 path/001 ours/final/result/sce-20-SoundRecorder-14/test_script_repair/1/traverse/2/simple_result/image/3.png"]
+	4 [fontsize=30 shapefile="D:/001 app_evolution/003 data/001 path/001 ours/final/result/sce-20-SoundRecorder-14/test_script_repair/1/traverse/2/simple_result/image/4.png"]
+	1 -> 2 [label="Settings-[333,45][518,70]" fontname=SimSun fontsize=30]
+	2 -> 3 [label="Navigateup-[0,27][63,90]" fontname=SimSun fontsize=30]
+	2 -> 4 [label="About-[18,192][66,217]" fontname=SimSun fontsize=30]
+	2 -> 4 [label="v1.3.0-[18,217][61,239]" fontname=SimSun fontsize=30]
+}

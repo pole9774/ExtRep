@@ -22,11 +22,11 @@ try:
     el2.click()
     time.sleep(3)
 
-    el3 = driver.find_elements_by_id('cn.ticktick.task:id/adc')[0]
+    el3 = driver.find_elements_by_id('cn.ticktick.task:id/aj0')[0]
     el3.click()
     time.sleep(3)
 
-    el4 = driver.find_elements_by_class_name('android.widget.Image')[7]
+    el4 = driver.tap([(423, 472)])
     el4.click()
 
 finally:

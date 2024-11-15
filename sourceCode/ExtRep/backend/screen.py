@@ -6,6 +6,7 @@ class Screen():
     def __init__(self, nodes, s_id, activity):
         self.act_name = activity
         self.id = s_id
+        # the event sequence that reached the screen
         self.event_sequences = []
         self.nodes = nodes
         self.has_clicked_nodes = []
@@ -80,15 +81,23 @@ class Screen():
 
         return None
 
+    def get_node_by_bounds(self, bounds):
+        for node in self.nodes:
+            if is_ignored_node(node) is not True and \
+                    node.loc_x == bounds[0] and node.loc_y == bounds[1] and \
+                    node.width == bounds[2] and node.height == bounds[3]:
+                return node
+
+        return None
 
 def is_ignored_node(node):
-    if 'layout' in node.attrib['class'] or node.attrib['class'] == 'android.view.View':
+    if 'Layout' in node.attrib['class'] or node.attrib['class'] == 'android.view.View':
         return True
 
     return False
 
 
-class Stack():
+class Stack:
     """
     a stack to store screen ids
     """
@@ -114,7 +123,7 @@ class Stack():
         return len(self.items)
 
 
-class Queue():
+class Queue:
     """
     a queue to store screen ids
     """

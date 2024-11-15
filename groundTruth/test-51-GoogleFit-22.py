@@ -14,12 +14,8 @@ driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
 time.sleep(10)
 
 try:
-    el1 = 
+    el1 = driver.find_elements_by_id('com.google.android.apps.fitness:id/navigation_bar_item_icon_view')[1]
     el1.click()
-    time.sleep(3)
-
-    el2 = 
-    el2.click()
 
 finally:
     time.sleep(3)

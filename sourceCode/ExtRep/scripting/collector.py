@@ -14,6 +14,7 @@ from utils.operate_current_device import action_click
 
 logger_number = 1
 
+
 def read_test_scripts(script_path):
 
     locators = []
@@ -73,6 +74,9 @@ def read_test_scripts(script_path):
                         tmp_info = line.strip().split('text(', 1)[1]
                         el_info = tmp_info[1:-4]
                     else:
+                        if 'find_element_by_id' in line:
+                            el_type = 'resource-id'
+                            el_num = 0
                         if 'find_elements_by_id' in line:
                             el_type = 'resource-id'
                         elif 'find_elements_by_class_name' in line:
@@ -129,6 +133,7 @@ def read_test_scripts(script_path):
 
     return locators, caps, code_line
 
+
 def visual(screens, edges, save_path):
     screen_save_path = os.path.join(save_path, "scenario_screens")
 
@@ -151,6 +156,7 @@ def visual(screens, edges, save_path):
     img = cv2.imread(img_path)
     cv2.imwrite(os.path.join(save_path, 'destination.png'), img)
 
+
 def script_replay(locators, save_path):
     distinct_rate = 0.9
     screen_id = 1
@@ -163,6 +169,7 @@ def script_replay(locators, save_path):
 
     clicked_node = None
     screen_save_path = os.path.join(save_path, "scenario_screens")
+    no_found_flag = False
     for locator in locators:
 
         if cur_screen_id == -1:
@@ -202,8 +209,11 @@ def script_replay(locators, save_path):
                         break
 
             if clicked_node is None:
+                print(locator)
                 print('Unable to find the currently clicked element, the test script replay failed.')
-                sys.exit()
+                no_found_flag = True
+                break
+                # sys.exit()
 
             bound = [clicked_node.loc_x, clicked_node.loc_y, clicked_node.width, clicked_node.height]
             base_event_sequences.append(bound)
@@ -257,8 +267,11 @@ def script_replay(locators, save_path):
                         break
 
             if clicked_node is None:
+                print(locator)
                 print('Unable to find the currently clicked element, the test script replay failed.')
-                sys.exit()
+                no_found_flag = True
+                break
+                # sys.exit()
 
             bound = [clicked_node.loc_x, clicked_node.loc_y, clicked_node.width, clicked_node.height]
             base_event_sequences.append(bound)
@@ -266,20 +279,21 @@ def script_replay(locators, save_path):
             action_click(clicked_node)
             time.sleep(1)
 
-    tmp_screen = get_tmp_screen()
-    exist_screen_id = has_same_screen(screens, tmp_screen, distinct_rate)
-    if exist_screen_id == cur_screen_id:
-        print('screen does not transfer')
+    if no_found_flag is not True:
+        tmp_screen = get_tmp_screen()
+        exist_screen_id = has_same_screen(screens, tmp_screen, distinct_rate)
+        if exist_screen_id == cur_screen_id:
+            print('screen does not transfer')
 
-    tmp_screen.id = screen_id
+        tmp_screen.id = screen_id
 
-    screens[tmp_screen.id] = tmp_screen
-    screen_id += 1
-    save_screen(tmp_screen, screen_save_path)
+        screens[tmp_screen.id] = tmp_screen
+        screen_id += 1
+        save_screen(tmp_screen, screen_save_path)
 
-    edge = Edge(cur_screen_id, tmp_screen.id, clicked_node.idx)
-    edges.append(edge)
-    screens[cur_screen_id].des.append(tmp_screen.id)
+        edge = Edge(cur_screen_id, tmp_screen.id, clicked_node.idx)
+        edges.append(edge)
+        screens[cur_screen_id].des.append(tmp_screen.id)
 
     print('edge')
     for edge in edges:
@@ -312,6 +326,7 @@ def script_replay(locators, save_path):
     visual(screens, edges, save_path)
 
     return base_event_sequences, scenario_model
+
 
 def event_seq_replay(event_seqs, save_flag, save_path):
     distinct_rate = 0.9
@@ -350,6 +365,7 @@ def event_seq_replay(event_seqs, save_flag, save_path):
                         break
 
             if clicked_node is None:
+                print(pos)
                 print('Unable to find the currently clicked element, the test script replay failed.')
                 return
 
@@ -389,6 +405,7 @@ def event_seq_replay(event_seqs, save_flag, save_path):
                         break
 
             if clicked_node is None:
+                print(pos)
                 print('Unable to find the currently clicked element, the test script replay failed.')
                 return
 
@@ -460,3 +477,11 @@ def event_seq_replay(event_seqs, save_flag, save_path):
 
     return screens, edges, record_node_attrib
 
+
+if __name__ == '__main__':
+    # path_save_dir = "D://lab//ExtRep//newAdd//featureCoverage//test-33-DaysMatter-17//scenario//original_path"
+    path_save_dir = "D://lab//ExtRep//newAdd//featureCoverage//experiment//approach//ExtRep-Ext//result1//test-29-CamScanner-16"
+    script_path = "D://lab//ExtRep//newAdd//featureCoverage//experiment//approach//ExtRep-Ext//tmp//repair_script.py"
+    # script_path = "D://lab//ExtRep//newAdd//featureCoverage//experiment//tmp//ExtRep//test-57-Diaguard-25.py"
+    locators, caps, ori_code_line = read_test_scripts(script_path)
+    script_replay(locators, path_save_dir)
